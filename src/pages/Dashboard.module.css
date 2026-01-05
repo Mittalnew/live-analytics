@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.welcomeSection {
+    margin-bottom: 0.5rem;
+}
+
+.chartsGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+}
+
+.lineChart {
+    grid-column: 1 / -1;
+}
+
+.barChart {
+    grid-column: 1 / 2;
+}
+
+.pieChart {
+    grid-column: 2 / 3;
+}
+
+.bottomSection {
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .chartsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .lineChart,
+    .barChart,
+    .pieChart {
+        grid-column: 1 / -1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

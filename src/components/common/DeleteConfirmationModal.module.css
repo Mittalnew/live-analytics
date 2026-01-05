@@ -1,0 +1,57 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.icon {
+    color: var(--danger);
+}
+
+.message {
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.itemName {
+    padding: 0.75rem 1rem;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    color: var(--text-main);
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.deleteButton {
+    background-color: var(--danger);
+    color: white;
+    flex: 1;
+}
+
+.deleteButton:hover {
+    background-color: #dc2626;
+}
+
