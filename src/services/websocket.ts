@@ -32,9 +32,16 @@ class WebSocketService {
         console.error('❌ WebSocket Error:', error);
       };
 
-      this.ws.onclose = () => {
-        console.log('🔌 WebSocket Disconnected');
-        this.reconnect(url, onMessage);
+      this.ws.onclose = (event: CloseEvent) => {
+        // Only reconnect if it's not a normal closure (code 1000 = normal, 1001 = going away)
+        // Code 1000 means intentional disconnect, don't reconnect
+        if (event.code !== 1000) {
+          console.log('🔌 WebSocket Disconnected, reconnecting...');
+          this.reconnect(url, onMessage);
+        } else {
+          // Normal closure - component unmounted or intentional disconnect
+          console.log('🔌 WebSocket Closed (normal)');
+        }
       };
     } catch (error) {
       console.error('❌ Failed to create WebSocket:', error);
@@ -66,7 +73,8 @@ class WebSocketService {
 
   disconnect(): void {
     if (this.ws) {
-      this.ws.close();
+      // Close with normal closure code (1000) to indicate intentional disconnect
+      this.ws.close(1000, 'Client disconnecting');
       this.ws = null;
     }
   }

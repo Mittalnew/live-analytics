@@ -36,7 +36,7 @@ const Sidebar = () => {
 
                 <NavLink to="/reports" className={({ isActive }) => `${styles.link} ${isActive ? styles.active : ''}`}>
                     <FileText size={20} />
-                    <span>Reports</span>
+                    <span>AI Reports</span>
                 </NavLink>
 
                 {user?.role === 'admin' && (

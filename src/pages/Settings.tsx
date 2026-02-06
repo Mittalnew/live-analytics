@@ -1,19 +1,60 @@
 import React, { useState } from 'react';
-import { User, Bell, Lock, Globe, Save } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { User, Lock, Save } from 'lucide-react';
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout } from '../store/slices/authSlice';
 import type { RootState } from '../store';
 import styles from './Settings.module.css';
 
 const Settings = () => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const dispatch = useDispatch();
+
+    // Initialize Local State with Global User Name
     const [activeTab, setActiveTab] = useState('profile');
+    const [displayName, setDisplayName] = useState(user?.name || '');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
     const tabs = [
         { id: 'profile', label: 'Profile', icon: User },
-        { id: 'notifications', label: 'Notifications', icon: Bell },
         { id: 'security', label: 'Security', icon: Lock },
-        { id: 'preferences', label: 'Preferences', icon: Globe },
     ];
+
+    const handleSave = () => {
+        if (!user) return;
+
+        if (activeTab === 'profile') {
+            // Update Redux Store (Global State)
+            dispatch(login({
+                ...user, // Keep existing email, role, avatar
+                name: displayName // Update Name
+            }));
+            alert('Profile updated successfully!');
+        } else if (activeTab === 'security') {
+            // Mock Validation Logic
+            if (!currentPassword || !newPassword) {
+                alert('Please fill all password fields.');
+                return;
+            }
+
+            // In a real app, this verification happens on the server
+            if (currentPassword !== 'password123') {
+                alert('❌ Incorrect current password! (Hint: Try "password123")');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert('Weak Password! Must be at least 6 chars.');
+                return;
+            }
+
+            // Success Flow
+            alert('✅ Password Changed Successfully! Logging you out for security...');
+
+            // Clear Session & Redirect to Login
+            dispatch(logout());
+        }
+    };
 
     const renderContent = () => {
         switch (activeTab) {
@@ -22,34 +63,22 @@ const Settings = () => {
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
                             <label>Display Name</label>
-                            <input type="text" defaultValue={user?.name} className={styles.input} />
+                            <input
+                                type="text"
+                                value={displayName}
+                                onChange={(e) => setDisplayName(e.target.value)}
+                                className={styles.input}
+                            />
                         </div>
                         <div className={styles.formGroup}>
                             <label>Email Address</label>
-                            <input type="email" defaultValue={user?.email} className={styles.input} />
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label>Bio</label>
-                            <textarea className={styles.textarea} placeholder="Tell us about yourself" rows={4}></textarea>
-                        </div>
-                    </div>
-                );
-            case 'notifications':
-                return (
-                    <div className={styles.formSection}>
-                        <div className={styles.toggleRow}>
-                            <div>
-                                <h4>Email Notifications</h4>
-                                <p>Receive emails about account activity.</p>
-                            </div>
-                            <input type="checkbox" defaultChecked />
-                        </div>
-                        <div className={styles.toggleRow}>
-                            <div>
-                                <h4>Push Notifications</h4>
-                                <p>Receive push notifications on your device.</p>
-                            </div>
-                            <input type="checkbox" defaultChecked />
+                            <input
+                                type="email"
+                                defaultValue={user?.email}
+                                className={styles.input}
+                                disabled
+                                style={{ opacity: 0.6, cursor: 'not-allowed' }}
+                            />
                         </div>
                     </div>
                 );
@@ -58,32 +87,23 @@ const Settings = () => {
                     <div className={styles.formSection}>
                         <div className={styles.formGroup}>
                             <label>Current Password</label>
-                            <input type="password" className={styles.input} />
+                            <input
+                                type="password"
+                                className={styles.input}
+                                value={currentPassword}
+                                onChange={(e) => setCurrentPassword(e.target.value)}
+                                placeholder="Enter current password"
+                            />
                         </div>
                         <div className={styles.formGroup}>
                             <label>New Password</label>
-                            <input type="password" className={styles.input} />
-                        </div>
-                    </div>
-                );
-            case 'preferences':
-                return (
-                    <div className={styles.formSection}>
-                        <div className={styles.formGroup}>
-                            <label>Language</label>
-                            <select className={styles.input}>
-                                <option>English</option>
-                                <option>Spanish</option>
-                                <option>French</option>
-                            </select>
-                        </div>
-                        <div className={styles.formGroup}>
-                            <label>Timezone</label>
-                            <select className={styles.input}>
-                                <option>UTC</option>
-                                <option>EST</option>
-                                <option>PST</option>
-                            </select>
+                            <input
+                                type="password"
+                                className={styles.input}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                placeholder="Enter new password"
+                            />
                         </div>
                     </div>
                 );
@@ -115,7 +135,7 @@ const Settings = () => {
                     {renderContent()}
 
                     <div className={styles.footer}>
-                        <button className="btn btn-primary" onClick={() => alert('Changes saved!')}>
+                        <button className="btn btn-primary" onClick={handleSave}>
                             <Save size={18} />
                             Save Changes
                         </button>

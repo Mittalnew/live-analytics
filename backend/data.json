@@ -1,0 +1,430 @@
+{
+    "dashboard": {
+        "revenue": {
+            "amount": 124500,
+            "change": 12.5
+        },
+        "activeUsers": {
+            "current": 1420
+        },
+        "newOrders": {
+            "count": 450,
+            "trend": 5.2
+        },
+        "conversionRate": 3.2,
+        "recentActivity": [
+            {
+                "id": "1",
+                "user": "Alice Smith",
+                "action": "Purchase #1023",
+                "time": "2 mins ago",
+                "status": "completed"
+            },
+            {
+                "id": "2",
+                "user": "Bob Jones",
+                "action": "Login",
+                "time": "5 mins ago",
+                "status": "completed"
+            },
+            {
+                "id": "3",
+                "user": "Charlie Brown",
+                "action": "Failed Payment",
+                "time": "12 mins ago",
+                "status": "failed"
+            }
+        ]
+    },
+    "analytics": {
+        "default": {
+            "engagement": [
+                {
+                    "name": "Day 1",
+                    "uv": 4000,
+                    "pv": 2400
+                },
+                {
+                    "name": "Day 2",
+                    "uv": 3000,
+                    "pv": 1398
+                },
+                {
+                    "name": "Day 3",
+                    "uv": 2000,
+                    "pv": 9800
+                },
+                {
+                    "name": "Day 4",
+                    "uv": 2780,
+                    "pv": 3908
+                },
+                {
+                    "name": "Day 5",
+                    "uv": 1890,
+                    "pv": 4800
+                },
+                {
+                    "name": "Day 6",
+                    "uv": 2390,
+                    "pv": 3800
+                },
+                {
+                    "name": "Day 7",
+                    "uv": 3490,
+                    "pv": 4300
+                },
+                {
+                    "name": "Day 8",
+                    "uv": 3000,
+                    "pv": 2400
+                },
+                {
+                    "name": "Day 9",
+                    "uv": 2000,
+                    "pv": 1398
+                },
+                {
+                    "name": "Day 10",
+                    "uv": 2780,
+                    "pv": 9800
+                }
+            ],
+            "products": [
+                {
+                    "name": "Prod A",
+                    "value": 4000
+                },
+                {
+                    "name": "Prod B",
+                    "value": 3000
+                },
+                {
+                    "name": "Prod C",
+                    "value": 2000
+                },
+                {
+                    "name": "Prod D",
+                    "value": 2780
+                }
+            ],
+            "metrics": {
+                "avgSession": "4m 32s",
+                "bounceRate": "42.5%",
+                "pageViews": "1.2M",
+                "ctr": "3.8%"
+            },
+            "heatmap": [
+                {
+                    "hour": 0,
+                    "index": 1,
+                    "value": 80
+                },
+                {
+                    "hour": 1,
+                    "index": 1,
+                    "value": 50
+                },
+                {
+                    "hour": 2,
+                    "index": 1,
+                    "value": 30
+                },
+                {
+                    "hour": 3,
+                    "index": 1,
+                    "value": 20
+                },
+                {
+                    "hour": 4,
+                    "index": 1,
+                    "value": 10
+                },
+                {
+                    "hour": 5,
+                    "index": 1,
+                    "value": 15
+                },
+                {
+                    "hour": 6,
+                    "index": 1,
+                    "value": 25
+                },
+                {
+                    "hour": 7,
+                    "index": 1,
+                    "value": 45
+                },
+                {
+                    "hour": 8,
+                    "index": 1,
+                    "value": 100
+                },
+                {
+                    "hour": 9,
+                    "index": 1,
+                    "value": 200
+                },
+                {
+                    "hour": 10,
+                    "index": 1,
+                    "value": 250
+                },
+                {
+                    "hour": 11,
+                    "index": 1,
+                    "value": 300
+                },
+                {
+                    "hour": 12,
+                    "index": 1,
+                    "value": 320
+                },
+                {
+                    "hour": 13,
+                    "index": 1,
+                    "value": 300
+                },
+                {
+                    "hour": 14,
+                    "index": 1,
+                    "value": 280
+                },
+                {
+                    "hour": 15,
+                    "index": 1,
+                    "value": 290
+                },
+                {
+                    "hour": 16,
+                    "index": 1,
+                    "value": 350
+                },
+                {
+                    "hour": 17,
+                    "index": 1,
+                    "value": 400
+                },
+                {
+                    "hour": 18,
+                    "index": 1,
+                    "value": 380
+                },
+                {
+                    "hour": 19,
+                    "index": 1,
+                    "value": 300
+                },
+                {
+                    "hour": 20,
+                    "index": 1,
+                    "value": 200
+                },
+                {
+                    "hour": 21,
+                    "index": 1,
+                    "value": 150
+                },
+                {
+                    "hour": 22,
+                    "index": 1,
+                    "value": 100
+                },
+                {
+                    "hour": 23,
+                    "index": 1,
+                    "value": 90
+                }
+            ]
+        }
+    },
+    "reports": [
+        {
+            "id": 1,
+            "name": "Sales Report - Nov 2023",
+            "date": "2023-11-30",
+            "status": "Available",
+            "type": "Sales"
+        },
+        {
+            "id": 2,
+            "name": "User Activity - Q3",
+            "date": "2023-10-15",
+            "status": "Available",
+            "type": "Activity"
+        },
+        {
+            "id": 3,
+            "name": "Revenue Summary",
+            "date": "2023-12-01",
+            "status": "Processing",
+            "type": "Revenue"
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "Alice Smith",
+            "email": "alice@inc.com",
+            "role": "Admin",
+            "status": "Active",
+            "sessionStatus": "online",
+            "location": "New York, USA",
+            "device": "MacBook Pro",
+            "lastLogin": "Just now",
+            "activityLogs": [
+                {
+                    "id": 101,
+                    "action": "Logged In",
+                    "time": "10:00 AM",
+                    "date": "Today",
+                    "status": "success"
+                },
+                {
+                    "id": 102,
+                    "action": "Viewed Analytics",
+                    "time": "10:05 AM",
+                    "date": "Today",
+                    "status": "info"
+                },
+                {
+                    "id": 103,
+                    "action": "Generated AI Report",
+                    "time": "10:15 AM",
+                    "date": "Today",
+                    "status": "success"
+                },
+                {
+                    "id": 104,
+                    "action": "Exported CSV",
+                    "time": "10:18 AM",
+                    "date": "Today",
+                    "status": "warning"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Bob Johnson",
+            "email": "bob@dev.io",
+            "role": "Editor",
+            "status": "Active",
+            "sessionStatus": "idle",
+            "location": "London, UK",
+            "device": "Windows 11 PC",
+            "lastLogin": "45 mins ago",
+            "activityLogs": [
+                {
+                    "id": 201,
+                    "action": "Logged In",
+                    "time": "09:00 AM",
+                    "date": "Today",
+                    "status": "success"
+                },
+                {
+                    "id": 202,
+                    "action": "Updated Profile",
+                    "time": "09:10 AM",
+                    "date": "Today",
+                    "status": "info"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Carol Williams",
+            "email": "carol@design.net",
+            "role": "Viewer",
+            "status": "Inactive",
+            "sessionStatus": "offline",
+            "location": "Berlin, Germany",
+            "device": "iPad Pro",
+            "lastLogin": "2 days ago",
+            "activityLogs": [
+                {
+                    "id": 301,
+                    "action": "Logged In",
+                    "time": "2 days ago",
+                    "date": "Jan 22",
+                    "status": "success"
+                },
+                {
+                    "id": 302,
+                    "action": "Logged Out",
+                    "time": "2 days ago",
+                    "date": "Jan 22",
+                    "status": "neutral"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "David Brown",
+            "email": "david@security.org",
+            "role": "Admin",
+            "status": "Active",
+            "sessionStatus": "online",
+            "location": "Toronto, CA",
+            "device": "Linux Workstation",
+            "lastLogin": "10 mins ago",
+            "activityLogs": [
+                {
+                    "id": 401,
+                    "action": "System Update",
+                    "time": "11:00 AM",
+                    "date": "Today",
+                    "status": "danger"
+                },
+                {
+                    "id": 402,
+                    "action": "Logged In",
+                    "time": "10:30 AM",
+                    "date": "Today",
+                    "status": "success"
+                }
+            ]
+        }
+    ],
+    "charts": {
+        "sales": [
+            {
+                "name": "Electronics",
+                "sales": 4000
+            },
+            {
+                "name": "Clothing",
+                "sales": 3000
+            },
+            {
+                "name": "Home",
+                "sales": 2000
+            },
+            {
+                "name": "Books",
+                "sales": 2780
+            },
+            {
+                "name": "Others",
+                "sales": 1890
+            }
+        ],
+        "traffic": [
+            {
+                "name": "Direct",
+                "value": 400
+            },
+            {
+                "name": "Social",
+                "value": 300
+            },
+            {
+                "name": "Referral",
+                "value": 300
+            },
+            {
+                "name": "Organic",
+                "value": 200
+            }
+        ]
+    }
+}

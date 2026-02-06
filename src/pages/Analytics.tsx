@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Filter, MapPin } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, ScatterChart, Scatter, ZAxis } from 'recharts';
 import styles from './Analytics.module.css';
@@ -24,6 +24,9 @@ const Analytics = () => {
     const [data, setData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const abortControllerRef = useRef<AbortController | null>(null);
+    const isMountedRef = useRef(true);
+    const lastRequestKeyRef = useRef<string>('');
 
     const categoryOptions = [
         { value: 'All', label: 'All Categories' },
@@ -51,32 +54,95 @@ const Analytics = () => {
     };
 
     useEffect(() => {
-        const fetchAnalytics = async () => {
-            setLoading(true);
-            setError(null);
-            
-            try {
-                const days = getDaysFromRange(dateRange);
-                const response = await fetch(
-                    `http://localhost:5000/api/analytics?category=${category}&region=${region}&days=${days}`
-                );
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch analytics data');
-                }
-                
-                const result = await response.json();
-                setData(result.data);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : 'An error occurred');
-                console.error('Error fetching analytics:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
+        // Create a unique key for this request
+        const requestKey = `${category}-${region}-${dateRange}`;
 
-        fetchAnalytics();
+        // Cancel previous request if it exists
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+
+        // Small delay to batch StrictMode double renders (100ms)
+        const timeoutId = setTimeout(() => {
+            // Check again inside timeout - if same request key, skip (handles StrictMode double render)
+            if (lastRequestKeyRef.current === requestKey) {
+                return;
+            }
+
+            // Create new AbortController for this request
+            abortControllerRef.current = new AbortController();
+            const signal = abortControllerRef.current.signal;
+            lastRequestKeyRef.current = requestKey;
+
+            const fetchAnalytics = async () => {
+                setLoading(true);
+                setError(null);
+                
+                try {
+                    const days = getDaysFromRange(dateRange);
+                    const url = `http://localhost:5000/api/analytics?category=${category}&region=${region}&days=${days}`;
+                    
+                    const response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        signal: signal,
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch analytics data: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // Only update state if component is still mounted and request wasn't aborted
+                    if (!signal.aborted && isMountedRef.current) {
+                        if (result.success && result.data) {
+                            setData(result.data);
+                        } else {
+                            throw new Error('Invalid response format from server');
+                        }
+                    }
+                } catch (err) {
+                    // Don't set error if request was aborted or component unmounted
+                    if (err instanceof Error && err.name === 'AbortError') {
+                        return;
+                    }
+                    if (!isMountedRef.current) {
+                        return;
+                    }
+                    const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+                    setError(errorMessage);
+                    console.error('Error fetching analytics:', err);
+                } finally {
+                    if (!signal.aborted && isMountedRef.current) {
+                        setLoading(false);
+                    }
+                }
+            };
+
+            fetchAnalytics();
+        }, 50);
+
+        // Cleanup function to abort request on unmount or dependency change
+        return () => {
+            clearTimeout(timeoutId);
+            if (abortControllerRef.current) {
+                abortControllerRef.current.abort();
+            }
+            // Reset request key if component unmounts
+            lastRequestKeyRef.current = '';
+        };
     }, [dateRange, category, region]);
+
+    // Reset mounted ref when component mounts
+    useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
+            isMountedRef.current = false;
+        };
+    }, []);
 
     if (loading) {
         return (

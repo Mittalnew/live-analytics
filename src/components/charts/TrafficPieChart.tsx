@@ -1,16 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-
-const data = [
-    { name: 'Direct', value: 400 },
-    { name: 'Social', value: 300 },
-    { name: 'Referral', value: 300 },
-    { name: 'Organic', value: 200 },
-];
 
 const COLORS = ['#6366f1', '#ec4899', '#10b981', '#f59e0b'];
 
 const TrafficPieChart = () => {
+    const [data, setData] = useState<any[]>([]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        fetch('http://localhost:5000/api/charts/traffic', { signal })
+            .then(res => res.json())
+            .then(data => {
+                if (!signal.aborted) {
+                    setData(data);
+                }
+            })
+            .catch(err => {
+                if (err.name !== 'AbortError') {
+                    console.error('Error fetching traffic data:', err);
+                }
+            });
+
+        return () => {
+            controller.abort();
+        };
+    }, []);
+
+    if (data.length === 0) {
+        return <div className="card glass-panel" style={{ padding: '1.5rem', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+    }
+
     return (
         <div className="card glass-panel" style={{ padding: '1.5rem', height: '100%' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem' }}>Traffic Sources</h2>

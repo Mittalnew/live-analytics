@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
-const data = [
-    { name: 'Electronics', sales: 4000 },
-    { name: 'Clothing', sales: 3000 },
-    { name: 'Home', sales: 2000 },
-    { name: 'Books', sales: 2780 },
-    { name: 'Others', sales: 1890 },
-];
-
 const SalesBarChart = () => {
+    const [data, setData] = useState<any[]>([]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        fetch('http://localhost:5000/api/charts/sales', { signal })
+            .then(res => res.json())
+            .then(data => {
+                if (!signal.aborted) {
+                    setData(data);
+                }
+            })
+            .catch(err => {
+                if (err.name !== 'AbortError') {
+                    console.error('Error fetching sales data:', err);
+                }
+            });
+
+        return () => {
+            controller.abort();
+        };
+    }, []);
+
+    if (data.length === 0) {
+        return <div className="card glass-panel" style={{ padding: '1.5rem', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+    }
+
     return (
         <div className="card glass-panel" style={{ padding: '1.5rem', height: '100%' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem' }}>Sales by Category</h2>
