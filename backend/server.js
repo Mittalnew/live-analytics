@@ -68,6 +68,13 @@ const wss = new WebSocket.Server({ server });
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React app (Frontend)
+const distPath = path.join(__dirname, '../dist');
+if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+    console.log(`📂 Serving static files from: ${distPath}`);
+}
+
 // Load static data
 const dataFilePath = path.join(__dirname, 'data.json');
 let staticData = {};
@@ -299,6 +306,19 @@ const startSimulation = () => {
 };
 
 startSimulation();
+
+// Handle React Routing, return all requests to React app
+app.get(/(.*)/, (req, res) => {
+    // Only serve index.html if it's not an API request
+    if (!req.path.startsWith('/api')) {
+        const indexPath = path.join(__dirname, '../dist', 'index.html');
+        if (fs.existsSync(indexPath)) {
+            res.sendFile(indexPath);
+        } else {
+            res.status(404).send("Frontend build not found. Please run 'npm run build' in the root directory.");
+        }
+    }
+});
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
