@@ -45,7 +45,7 @@ const Users = () => {
     useEffect(() => {
         // Fetch users from our upgraded backend
         const controller = new AbortController();
-        fetch('http://localhost:5000/api/users', { signal: controller.signal })
+        fetch('/api/users', { signal: controller.signal })
             .then(res => res.json())
             .then(data => {
                 // Smart Defaults Pattern

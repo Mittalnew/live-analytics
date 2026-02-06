@@ -80,7 +80,7 @@ const Analytics = () => {
                 
                 try {
                     const days = getDaysFromRange(dateRange);
-                    const url = `http://localhost:5000/api/analytics?category=${category}&region=${region}&days=${days}`;
+                    const url = `/api/analytics?category=${category}&region=${region}&days=${days}`;
                     
                     const response = await fetch(url, {
                         method: 'GET',

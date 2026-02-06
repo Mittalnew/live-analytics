@@ -10,7 +10,7 @@ const TrafficPieChart = () => {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:5000/api/charts/traffic', { signal })
+        fetch('/api/charts/traffic', { signal })
             .then(res => res.json())
             .then(data => {
                 if (!signal.aborted) {

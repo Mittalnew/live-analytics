@@ -17,7 +17,7 @@ const Reports = () => {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        fetch('http://localhost:5000/api/reports', { signal })
+        fetch('/api/reports', { signal })
             .then(res => res.json())
             .then(data => {
                 if (!signal.aborted) {
@@ -163,7 +163,7 @@ const Reports = () => {
         setGeneratingType('summary');
         setReportTitle("AI Executive Summary"); // Set specific title
         try {
-            const response = await fetch('http://localhost:5000/api/generate-ai-report', {
+            const response = await fetch('/api/generate-ai-report', {
                 method: 'POST',
             });
             const result = await response.json();
@@ -186,7 +186,7 @@ const Reports = () => {
         setGeneratingType('standard');
         setReportTitle("Comprehensive Standard Business Report"); // Standard title
         try {
-            const response = await fetch('http://localhost:5000/api/generate-standard-report', {
+            const response = await fetch('/api/generate-standard-report', {
                 method: 'POST',
             });
             const result = await response.json();

@@ -317,6 +317,9 @@ app.get(/(.*)/, (req, res) => {
         } else {
             res.status(404).send("Frontend build not found. Please run 'npm run build' in the root directory.");
         }
+    } else {
+         // If it starts with /api but wasn't handled by previous routes
+         res.status(404).json({ success: false, message: "API endpoint not found" });
     }
 });
 

@@ -17,7 +17,12 @@ const Layout = () => {
     useEffect(() => {
         if (!isAuthenticated) return;
 
-        const WS_URL = 'ws://localhost:5000';
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        // Handle local dev (Vite on 5173) connecting to backend on 5000
+        const host = window.location.hostname === 'localhost' && window.location.port === '5173'
+            ? 'localhost:5000'
+            : window.location.host;
+        const WS_URL = `${protocol}//${host}`;
 
         const handleMessage = (data: any) => {
             switch (data.type) {
